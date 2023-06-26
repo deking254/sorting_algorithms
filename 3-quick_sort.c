@@ -1,113 +1,79 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "sort.h"
-size_t smallest(int *arr, size_t starting_index, size_t size);
-void print_arr(int *arr, size_t size);
-size_t largest(int *arr, size_t starting_index);
+#include <sys/types.h>
 /**
- * main - Entry point
- *
- * Return: Always 0
+*swap - the positions of two elements into an array
+*@array: array
+*@item1: array element
+*@item2: array element
+*/
+void swap(int *array, ssize_t item1, ssize_t item2)
+{
+	int tmp;
+
+	tmp = array[item1];
+	array[item1] = array[item2];
+	array[item2] = tmp;
+}
+/**
+ *lomuto_partition - lomuto partition sorting scheme implementation
+ *@array: array
+ *@first: first array element
+ *@last: last array element
+ *@size: size array
+ *Return: return the position of the last element sorted
+ */
+int lomuto_partition(int *array, ssize_t first, ssize_t last, size_t size)
+{
+	int pivot = array[last];
+	ssize_t current = first, finder;
+
+	for (finder = first; finder < last; finder++)
+	{
+		if (array[finder] < pivot)
+		{
+			if (array[current] != array[finder])
+			{
+				swap(array, current, finder);
+				print_array(array, size);
+			}
+			current++;
+		}
+	}
+	if (array[current] != array[last])
+	{
+		swap(array, current, last);
+		print_array(array, size);
+	}
+	return (current);
+}
+/**
+ *qs - qucksort algorithm implementation
+ *@array: array
+ *@first: first array element
+ *@last: last array element
+ *@size: array size
+ */
+void qs(int *array, ssize_t first, ssize_t last, int size)
+{
+	ssize_t position = 0;
+
+
+	if (first < last)
+	{
+		position = lomuto_partition(array, first, last, size);
+
+		qs(array, first, position - 1, size);
+		qs(array, position + 1, last, size);
+	}
+}
+/**
+ *quick_sort - prepare the terrain to quicksort algorithm
+ *@array: array
+ *@size: array size
  */
 void quick_sort(int *array, size_t size)
 {
-int current, second, smallist;
-size_t index, smallst;
-size_t i = 0, j = 2;
-while(i < size)
-{
-current = array[i];
-index = largest(array, size - 1);
-smallst = smallest(array, i, size);
-second = array[smallst];
-if (index != size - 1)
-{
-array[i] = second;
-array[smallst] = current;
-if (smallst != i)
-print_arr(array, size);
-}
-else
-{
-index = largest(array, size - j);
-current = array[index];
-smallist = array[index + 1];
-if (current > smallist)
-{
-array[index + 1] = current;
-array[index] = smallist;
-print_arr(array, size);
-}
-else
-j++;
-}
-i++;
-}
-}
-/**
- * main - Entry point
- *
- * Return: Always 0
- */
-size_t smallest(int *arr, size_t starting_index, size_t size)
-{
-size_t i = 0, status = 0;
-while (i < size)
-{
-if (i > starting_index)
-{
-if (arr[starting_index] > arr[i])
-status = 1;
-}
-i++;
-if (status == 1)
-{
-starting_index += 1;
-i = 0;
-status = 0;
-}
-}
-if (status == 0)
-return (starting_index);
-else
-return (0);
-}
-/**
- * main - Entry point
- *
- * Return: Always 0
- */
-void print_arr(int *arr, size_t size)
-{
-size_t i = 0;
-while (i < size)
-{
-printf("%d", arr[i]);
-i++;
-if (i == size)
-printf("\n");
-else
-printf(", ");
-}
-}
-size_t largest(int *arr, size_t starting_index)
-{
-int status = 0;
-size_t i = 0; 
-while (i < starting_index)
-{
-if (arr[starting_index] < arr[i])
-{
-status = 1;
-starting_index -= 1;
-}
-i++;
-if (status == 1)
-i = 0;
-status = 0;
-}
-if (status == 0)
-return (starting_index);
-else
-return (0);
+	if (!array || size < 2)
+		return;
+	qs(array, 0, size - 1, size);
 }
