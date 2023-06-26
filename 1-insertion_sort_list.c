@@ -23,7 +23,10 @@ if (new->next->n < new->n)
 new = to_head(new);
 altered = switcher(new, i);
 print_pointer(altered, pointer_size(altered));
+if (i != 0)
 i = 0;
+else
+i++;
 }
 else
 {
