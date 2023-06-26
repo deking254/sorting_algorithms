@@ -49,7 +49,7 @@ while (new)
 new = new->next;
 size += 1;
 }
-return size;
+return (size);
 }
 /**
  * print_pointer - Entry point
@@ -96,7 +96,8 @@ return (ne);
 listint_t *switcher(listint_t *new, int pos)
 {
 int i = 0;
-listint_t *first = NULL, *second = NULL, *higher_outlier = NULL, *lower_outlier = NULL;
+listint_t *first = NULL, *second = NULL;
+listint_t *higher_outlier = NULL, *lower_outlier = NULL;
 while (new)
 {
 if (i == pos)
