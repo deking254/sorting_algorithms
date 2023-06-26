@@ -1,8 +1,9 @@
 #include "sort.h"
 #include <stdio.h>
 /**
- * main - Entry point
- *
+ * bubble_sort - Entry point
+ * @array: the array
+ * @size: size of array
  * Return: Always 0
  */
 void bubble_sort(int *array, size_t size)
@@ -23,7 +24,7 @@ upper_tmp = array[i];
 lower_tmp = array[i + 1];
 array[i] = lower_tmp;
 array[i + 1] = upper_tmp;
-while(j < size)
+while (j < size)
 {
 printf("%d", array[j]);
 if (j != size - 1)
