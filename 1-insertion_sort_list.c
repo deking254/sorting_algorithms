@@ -14,6 +14,8 @@ void insertion_sort_list(listint_t **list)
 int i = 0;
 listint_t *new = *list;
 listint_t *altered = NULL;
+if (pointer_size(new) < 2)
+return;
 while (new)
 {
 if (new->next)
